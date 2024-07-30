@@ -1,0 +1,145 @@
+/* Existing styles */
+body {
+  background-color: #2d2d2d;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.title-list {
+  color: #4f8fde;
+}
+
+.form-label {
+  color: #ffffff;
+}
+
+.todo-list {
+  margin-top: 20px;
+}
+
+.todo-card {
+  background-color: #333333; /* Dark background to match the form */
+  color: #ffffff; /* White text color */
+  border: 1px solid #4f8fde; /* Border color to match the theme */
+  border-radius: 5px; /* Rounded corners */
+  padding: 15px; /* Padding inside the card */
+  margin-bottom: 15px; /* Space between cards */
+}
+
+.todo-card .card-title {
+  font-size: 1.25rem; /* Slightly larger font size for the title */
+  margin-bottom: 10px; /* Space below the title */
+}
+
+.todo-card .card-text {
+  font-size: 1rem; /* Standard font size for the text */
+  margin-bottom: 10px; /* Space below the text */
+}
+
+.todo-card .view-task-button {
+  background-color: #4f8fde; /* Button color to match the theme */
+  border: none; /* Remove default border */
+  color: #ffffff; /* White text color */
+  padding: 10px 20px; /* Padding inside the button */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.todo-card .view-task-button:hover {
+  background-color: #3a6fb0; /* Darker shade on hover */
+}
+
+/* New form styles */
+#taskForm {
+  background-color: #444444;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  max-width: 500px; /* Set a maximum width */
+  margin: 0 auto; /* Center the form horizontally */
+}
+
+#taskForm .form-group {
+  margin-bottom: 15px;
+}
+
+#taskForm .form-label {
+  color: #f9f9f9;
+}
+
+#taskForm .form-control {
+  color: #555555;
+  border: 1px solid #555555;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#taskForm .form-control:focus {
+  border-color: #4d69c6;
+  box-shadow: 0 0 5px rgba(33, 82, 207, 0.5);
+}
+
+#taskForm .btn {
+  background-color:#0f64a3;
+  ;
+  border: none;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#taskForm .btn:hover {
+  background-color: #005dd8;
+}
+
+/* Ensure the card width is constrained */
+.card {
+  max-width: 540px;
+  margin: auto;
+}
+
+/* Additional styling for better appearance */
+body {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
+.title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.title-list {
+  color: #007bff;
+}
+
+.todo-list {
+  margin-top: 20px;
+}
+
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.texts {
+  flex-grow: 1;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}

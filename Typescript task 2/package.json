@@ -1,0 +1,18 @@
+{
+  "devDependencies": {
+    "lite-server": "^2.6.1",
+    "typescript": "^5.5.4"
+  },
+  "name": "typescript-task-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "build": "tsc",
+    "dev": "lite-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

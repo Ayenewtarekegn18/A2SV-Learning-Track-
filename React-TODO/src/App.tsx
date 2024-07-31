@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Card from './Card';
 
-// Define the Task interface with id, title, and description properties
 interface Task {
   id: number;
   title: string;
@@ -10,67 +9,50 @@ interface Task {
 }
 
 const App: React.FC = () => {
-  // State to manage the list of tasks
   const [tasks, setTasks] = useState<Task[]>([]);
-  // State to manage whether a task is being edited
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  // State to manage the current task being edited
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
 
-  // Function to add a new task to the list
+  // Add a new task to the list
   const addTask = (title: string, description: string) => {
-    console.log(title, description); // Log the title and description to the console
-    const newTask: Task = { id: tasks.length + 1, title, description }; // Create a new task object
-    setTasks([...tasks, newTask]); // Update the tasks state with the new task
+    const newTask: Task = { id: tasks.length + 1, title, description };
+    setTasks([...tasks, newTask]);
   };
 
-  // Function to update an existing task in the list
+  // Update an existing task
   const updateTask = (id: number, title: string, description: string) => {
-    const updatedTasks = tasks.map(task => 
-      task.id === id ? { ...task, title, description } : task // Update the task if the id matches
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, title, description } : task
     );
-    setTasks(updatedTasks); // Update the tasks state with the updated tasks
-    resetForm(); // Reset the form after updating
+    setTasks(updatedTasks);
+    setIsEditing(false);
   };
 
-  // Function to reset the form (clear current task and editing state)
-  const resetForm = () => {
-    setCurrentTask(null); // Clear the current task
-    setIsEditing(false); // Set editing state to false
-  };
-
-  // Function to handle the edit action
-  const handleEdit = (task: Task) => {
-    setCurrentTask(task); // Set the current task to the task being edited
-    setIsEditing(true); // Set editing state to true
-  };
-
-  // Function to handle the delete action
-  const handleDelete = (id: number) => {
-    const updatedTasks = tasks.filter(task => task.id !== id); // Filter out the task with the given id
-    setTasks(updatedTasks); // Update the tasks state with the remaining tasks
-  };
-
-  // Function to handle form submission
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const title = form.taskTitle.value.trim(); // Get the trimmed title value from the form
-    const description = form.taskDescription.value.trim(); // Get the trimmed description value from the form
+    const title = form.taskTitle.value.trim();
+    const description = form.taskDescription.value.trim();
 
     if (title && description) {
       if (isEditing && currentTask) {
-        updateTask(currentTask.id, title, description); // Update the task if editing
+        updateTask(currentTask.id, title, description);
       } else {
-        addTask(title, description); // Add a new task if not editing
+        addTask(title, description);
       }
-
-      form.reset(); // Reset the form fields
-      resetForm(); // Reset the form state
-    } else {
-      console.error("Both title and description are required."); // Log an error if title or description is missing
+      form.reset();
     }
   };
+
+  // Reset the form when the task is changed
+  useEffect(() => {
+    if (!isEditing) {
+      setCurrentTask(null);
+    }
+  }, [isEditing]);
+
+ 
 
   return (
     <>
@@ -84,7 +66,11 @@ const App: React.FC = () => {
               className="form-control"
               id="taskTitle"
               required
-              defaultValue={currentTask?.title || ''} // Set the default value to the current task's title if editing
+              value={currentTask?.title || ''}
+              onChange={(e) => setCurrentTask(currentTask 
+                ? { ...currentTask, title: e.target.value } 
+                : { id: tasks.length + 1, title: e.target.value, description: '' })
+              }
             />
           </div>
           <div className="mb-3">
@@ -94,24 +80,29 @@ const App: React.FC = () => {
               id="taskDescription"
               rows={3}
               required
-              defaultValue={currentTask?.description || ''} // Set the default value to the current task's description if editing
-            ></textarea>I 
+              value={currentTask?.description || ''}
+              onChange={(e) => setCurrentTask(currentTask 
+                ? { ...currentTask, description: e.target.value } 
+                : { id: tasks.length + 1, title: '', description: e.target.value })
+              }
+            ></textarea>
           </div>
           <button id="addTaskButton" type="submit" className="btn btn-primary">
             {isEditing ? 'Update Task' : 'Add Task'}
           </button>
         </form>
       </div>
-      {tasks.length === 0 ? (
-        <p></p> // Display a message if there are no tasks
-      ) : (
+      {tasks.length > 0 && (
         <div className="todo-list">
           {tasks.map(task => (
             <Card
               key={task.id}
               task={task}
-              onEdit={() => handleEdit(task)} // Pass the handleEdit function to the Card component
-              onDelete={() => handleDelete(task.id)} // Pass the handleDelete function to the Card component
+              onEdit={() => {
+                setIsEditing(true);
+                setCurrentTask(task);
+              }}
+              onDelete={() => setTasks(tasks.filter(t => t.id !== task.id))}
             />
           ))}
         </div>
